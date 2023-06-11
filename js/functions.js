@@ -30,3 +30,6 @@ function parseNumbers (checkedInput) {
   return parseInt(formattedInput, 10);
 }
 
+isValid('Строка', 6);
+isPalindrome('топот');
+parseNumbers('ECMAScript 2022');
