@@ -27,7 +27,6 @@ function parseNumbers (checkedInput) {
       formattedInput += Math.abs(parseInt(checkedInput[i], 10));
     }
   }
-  return parseInt(formattedInput);
+  return parseInt(formattedInput, 10);
 }
 
-console.log(parseNumbers('ECMAScript 2022'))
