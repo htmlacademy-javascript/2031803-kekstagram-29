@@ -1,4 +1,3 @@
-
 function isValid (checkedString, maxLength) {
   /*Функция для проверки длины строки*/
   return checkedString.length <= maxLength;
@@ -6,8 +5,7 @@ function isValid (checkedString, maxLength) {
 
 function isPalindrome (checkedString) {
   /*Функция для проверки, является ли строка палиндромом*/
-  checkedString = checkedString.replaceAll(' ', '');
-  checkedString = checkedString.toLowerCase();
+  checkedString = checkedString.replaceAll(' ', '').toLowerCase();
   let reversedString = '';
   for (let i = checkedString.length - 1; i >= 0; i--) {
     reversedString += checkedString[i];
