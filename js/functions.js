@@ -1,9 +1,6 @@
-function isValid (checkedString, maxLength) {
-  /*Функция для проверки длины строки*/
-  return checkedString.length <= maxLength;
-}
+const isValid = (checkedString, maxLength) => checkedString.length <= maxLength;
 
-function isPalindrome (checkedString) {
+const isPalindrome = (checkedString) => {
   /*Функция для проверки, является ли строка палиндромом*/
   checkedString = checkedString.replaceAll(' ', '').toLowerCase();
   let reversedString = '';
@@ -11,9 +8,9 @@ function isPalindrome (checkedString) {
     reversedString += checkedString[i];
   }
   return checkedString === reversedString;
-}
+};
 
-function parseNumbers (checkedInput) {
+const extractNumbers = (checkedInput) => {
   /*Функция принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
   и возвращает их в виде целого положительного числа.*/
   let formattedInput = '';
@@ -26,8 +23,21 @@ function parseNumbers (checkedInput) {
     }
   }
   return parseInt(formattedInput, 10);
-}
+};
 
 isValid('Строка', 6);
 isPalindrome('топот');
-parseNumbers('ECMAScript 2022');
+extractNumbers('ECMAScript 2022');
+
+
+function isMeetingAvailable (beginningOfWorkday, endOfWorkday, beginningOfMeeting, meetingDuration) {
+  for (let i = 0; i < 3; i++) {
+    arguments[i] = parseFloat(arguments[i].replace(':', '.'));
+    arguments[i] = Math.trunc(arguments[i]) * 60 + arguments[i] % 1 * 100;
+  }
+  console.log(beginningOfWorkday);
+  return (arguments[2] >= arguments[0] && arguments[2] + meetingDuration <= arguments[1]);
+};
+
+
+console.log(isMeetingAvailable('8:0', '10:0', '8:0', 120)); // true
