@@ -1,3 +1,3 @@
-import {createPhotoDescriptions} from './data-generation';
+import {createPhotoDescriptions} from './data-generation.js';
 
 createPhotoDescriptions();
