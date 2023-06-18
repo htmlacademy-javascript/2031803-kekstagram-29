@@ -42,15 +42,20 @@ assert.equal(extractNumbers('агент 007'), 7);
 
 
 function isMeetingAvailable (beginningOfWorkday, endOfWorkday, beginningOfMeeting, meetingDuration) {
+  const re = /(?<=:)\d+/;
   for (let i = 0; i < 3; i++) {
+    if (arguments[i].match(re)[0].length === 1) {
+      arguments[i] = `${arguments[i].slice(0, -1)}0${arguments[i].slice(-1)}`;
+    }
     arguments[i] = parseFloat(arguments[i].replace(':', '.'));
     arguments[i] = Math.trunc(arguments[i]) * 60 + arguments[i] % 1 * 100;
   }
   return (arguments[2] >= arguments[0] && arguments[2] + meetingDuration <= arguments[1]);
-};
+}
 
 assert.equal(isMeetingAvailable('08:00', '17:30', '14:00', 90), true);
 assert.equal(isMeetingAvailable('8:0', '10:0', '8:0', 120), true);
 assert.equal(isMeetingAvailable('08:00', '14:30', '14:00', 90), false);
 assert.equal(isMeetingAvailable('14:00', '17:30', '08:0', 90), false);
 assert.equal(isMeetingAvailable('8:00', '17:30', '08:00', 900), false);
+assert.equal(isMeetingAvailable('8:00', '17:30', '08:5', 900), false);
