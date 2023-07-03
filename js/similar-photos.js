@@ -1,6 +1,9 @@
 import {createPhotoDescriptions} from './data-generation.js';
+import {closeBigPicture, openBigPicture} from './photo-viewer.js';
+import {getSelectedPhotoIndex} from './util.js';
 
 const picturesContainer = document.querySelector('.pictures');
+const hidePictureButton = document.querySelector('.big-picture__cancel');
 
 const pictureTemplate = document.querySelector('#picture')
   .content
@@ -9,6 +12,7 @@ const pictureTemplate = document.querySelector('#picture')
 const fragmentPhotos = document.createDocumentFragment();
 
 const similarPhotoObjects = createPhotoDescriptions();
+console.log(similarPhotoObjects);
 
 const renderPhotos = () => {
   similarPhotoObjects.forEach(({url, description, likes, comments}) => {
@@ -22,5 +26,13 @@ const renderPhotos = () => {
   picturesContainer.append(fragmentPhotos);
 };
 
+picturesContainer.addEventListener('click', (evt) => {
+  if (evt.target.closest('.picture')) {
+    const objectIndex = getSelectedPhotoIndex(similarPhotoObjects, evt);
+    openBigPicture(similarPhotoObjects[objectIndex]);
+  }
+});
+
+hidePictureButton.addEventListener('click', () => closeBigPicture());
 
 export {renderPhotos};

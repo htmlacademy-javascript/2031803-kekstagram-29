@@ -25,4 +25,8 @@ const createUniqueId = (min, max) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey};
+const getSelectedPhotoIndex = (array, evt) => {
+  return array.findIndex((obj) => obj.url === evt.target.getAttribute('src'));
+};
+
+export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey, getSelectedPhotoIndex};
