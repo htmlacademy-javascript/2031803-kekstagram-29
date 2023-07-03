@@ -1,4 +1,4 @@
-import {renderPhotos} from './render-photos.js';
-import './full-photo.js';
+import {renderPhotos} from './similar-photos.js';
+import './photo-viewer.js';
 
-renderPhotos();
+renderPhotos()
