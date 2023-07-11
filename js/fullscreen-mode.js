@@ -21,14 +21,15 @@ const renderComments = (comments, start = 0) => {
   });
 };
 
-const commentsUpload = (comments) => {
+const renderNewComments = (comments) => {
   let currentStart = 0;
-  commentsLoader.addEventListener('click', () => {
+  return function () {
     currentStart += COMMENTS_UPLOAD_COUNT;
     renderComments(comments, currentStart);
-  });
+  };
 };
 
+let newComments;
 const openBigPicture = ({url, description, likes, comments}) => {
   bigPicture.classList.remove('hidden');
   bigPicture.querySelector('.big-picture__img img').src = url;
@@ -38,7 +39,8 @@ const openBigPicture = ({url, description, likes, comments}) => {
   document.body.classList.add('modal-open');
   commentsContainer.innerHTML = '';
   renderComments(comments);
-  commentsUpload(comments);
+  newComments = renderNewComments(comments);
+  commentsLoader.addEventListener('click', newComments);
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
@@ -48,6 +50,7 @@ const closeBigPicture = () => {
   commentCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.removeEventListener('keydown', onPopupEscKeydown);
+  commentsLoader.removeEventListener('click', newComments);
 };
 
 function onPopupEscKeydown (evt) {
