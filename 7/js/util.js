@@ -1,5 +1,3 @@
-import {closeBigPicture} from './fullscreen-mode.js';
-
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -25,15 +23,6 @@ const createUniqueId = (min, max) => {
   };
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (key) => key === 'Escape';
 
-const onPopupEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeBigPicture();
-  }
-};
-
-const getSelectedPhotoIndex = (array, evt) => array.findIndex((obj) => obj.url === evt.target.getAttribute('src'));
-
-export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey, onPopupEscKeydown, getSelectedPhotoIndex};
+export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey};
