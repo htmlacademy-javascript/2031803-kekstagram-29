@@ -40,19 +40,3 @@ imageUploadInput.addEventListener('change', (evt) => {
 });
 
 imageUploadCancel.addEventListener('click', closeImageUpload);
-
-/*const openBigPicture = ({url, description, likes, comments}) => {
-  bigPicture.classList.remove('hidden');
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.comments-count').textContent = comments.length;
-  bigPicture.querySelector('.social__caption').textContent = description;
-  document.body.classList.add('modal-open');
-  commentsContainer.innerHTML = '';
-  renderComments(comments);
-  newComments = loadNewComments(comments);
-  commentsLoader.addEventListener('click', newComments);
-  document.addEventListener('keydown', onPopupEscKeydown);
-};*/
-
-
