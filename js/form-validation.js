@@ -45,7 +45,6 @@ pristine.addValidator(
 
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  console.log(pristine.validate());
   if (pristine.validate()) {
     imageUploadForm.submit();
   }
