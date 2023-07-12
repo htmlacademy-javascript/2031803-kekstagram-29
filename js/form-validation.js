@@ -18,7 +18,7 @@ const isTagUnique = (hashtagArray) => {
 };
 
 const validateHashtags = (hashtags) => hashtags.split(' ').every(isTagValid)
-  && hashtags.split(' ').length > 5
+  && hashtags.split(' ').length < 5
   && isTagUnique(hashtags.split(' '));
 
 const getHashtagErrorMessage = (hashtags) => {
@@ -42,6 +42,14 @@ pristine.addValidator(
   imageUploadForm.querySelector('.text__hashtags'),
   validateHashtags,
   getHashtagErrorMessage);
+
+const validateComment = (comment) => comment.length <= 140;
+
+pristine.addValidator(
+  imageUploadForm.querySelector('.text__description'),
+  validateComment,
+  'длина комментария не может составлять больше 140 символов');
+
 
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
