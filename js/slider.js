@@ -51,6 +51,21 @@ const getSliderSettings = (filter) => {
   }
 };
 
+const getFilterSettings = (filter) => {
+  switch (filter) {
+    case 'chrome':
+      return 'filter: grayscale(0..1)';
+    case 'sepia':
+      return 'filter: sepia(0..1)';
+    case 'marvin':
+      return 'filter: invert(0..100%)';
+    case 'phobos':
+      return 'filter: blur(0..3px)';
+    case 'heat':
+      return 'filter: brightness(1..3)';
+  }
+};
+
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -60,4 +75,20 @@ noUiSlider.create(sliderElement, {
 });
 
 const uploadedPicture = document.querySelector('.img-upload__uploaded-picture');
+
+const filterItems = document.querySelectorAll('.effects__item');
+
+let slider;
+filterItems.forEach((item) => {
+  item.addEventListener('change', (evt) => {
+    const sliderSettings = getSliderSettings(evt.target.value);
+    sliderElement.noUiSlider.updateOptions(sliderSettings);
+  });
+});
+
+const effectValue = sliderContainer.querySelector('.effect-level__value');
+
+sliderElement.noUiSlider.on('update', () => {
+  effectValue.value = sliderElement.noUiSlider.get();
+});
 
