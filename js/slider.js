@@ -51,18 +51,18 @@ const getSliderSettings = (filter) => {
   }
 };
 
-const getFilterSettings = (filter) => {
+const getFilterSettings = (filter, level) => {
   switch (filter) {
     case 'chrome':
-      return 'filter: grayscale(0..1)';
+      return `grayscale(${level})`;
     case 'sepia':
-      return 'filter: sepia(0..1)';
+      return `sepia(${level})`;
     case 'marvin':
-      return 'filter: invert(0..100%)';
+      return `invert(${level}%)`;
     case 'phobos':
-      return 'filter: blur(0..3px)';
+      return `blur(${level}px)`;
     case 'heat':
-      return 'filter: brightness(1..3)';
+      return `brightness(${level})`;
   }
 };
 
@@ -74,21 +74,21 @@ noUiSlider.create(sliderElement, {
   start: 100,
 });
 
-const uploadedPicture = document.querySelector('.img-upload__uploaded-picture');
-
 const filterItems = document.querySelectorAll('.effects__item');
+const uploadedPicture = document.querySelector('.img-upload__preview');
+let chosenEffect;
 
-let slider;
 filterItems.forEach((item) => {
   item.addEventListener('change', (evt) => {
-    const sliderSettings = getSliderSettings(evt.target.value);
+    chosenEffect = evt.target.value;
+    const sliderSettings = getSliderSettings(chosenEffect);
     sliderElement.noUiSlider.updateOptions(sliderSettings);
   });
 });
 
-const effectValue = sliderContainer.querySelector('.effect-level__value');
+const effectLevel = sliderContainer.querySelector('.effect-level__value');
 
 sliderElement.noUiSlider.on('update', () => {
-  effectValue.value = sliderElement.noUiSlider.get();
+  effectLevel.value = sliderElement.noUiSlider.get();
+  uploadedPicture.style.filter = getFilterSettings(chosenEffect, effectLevel.value);
 });
-
