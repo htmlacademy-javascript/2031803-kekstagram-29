@@ -29,14 +29,20 @@ const addNewImage = (file) => {
   const reader = new FileReader();
   reader.onload = function(e) {
     const imageUrl = e.target.result;
-    preview.innerHTML = `<img src="${imageUrl}" alt="Preview">`;
+    preview.innerHTML = `<img class="img-upload__uploaded-picture" src="${imageUrl}" alt="Preview">`;
   };
   reader.readAsDataURL(file);
 };
 
+const effectsPreview = document.querySelectorAll('.effects__preview');
+
 imageUploadInput.addEventListener('change', (evt) => {
   openImageUpload();
   addNewImage(evt.target.files[0]);
+  const uploadedPicture = document.querySelector('.img-upload__uploaded-picture');
+  effectsPreview.forEach((effect) => {
+    effect.style.backgroundImage = `url('${uploadedPicture.src}')`;
+  });
 });
 
 imageUploadCancel.addEventListener('click', closeImageUpload);
