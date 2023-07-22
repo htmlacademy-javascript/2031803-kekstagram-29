@@ -1,7 +1,6 @@
 const decreaseScaleButton = document.querySelector('.scale__control--smaller');
 const increaseScaleButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
-const imagePreview = document.querySelector('.img-upload__preview');
 
 const SCALE_STEP = 25;
 const MAX_SCALE = 100;
@@ -12,8 +11,8 @@ const changeScale = (sign) => {
   let updatedScaleValue = previousScaleValue + sign * SCALE_STEP;
   updatedScaleValue = updatedScaleValue > MAX_SCALE ? MAX_SCALE : updatedScaleValue;
   updatedScaleValue = updatedScaleValue < MIN_SCALE ? MIN_SCALE : updatedScaleValue;
+  const imagePreview = document.querySelector('.img-upload__preview img');
   imagePreview.style.transform = `scale(${updatedScaleValue * 0.01})`;
-
   scaleValue.value = `${updatedScaleValue}%`;
 };
 

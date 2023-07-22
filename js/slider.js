@@ -66,29 +66,47 @@ const getFilterSettings = (filter, level) => {
   }
 };
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-});
+const createInitialSlider = () => {
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 100,
+  });
+
+  sliderElement.classList.add('hidden');
+  sliderContainer.classList.add('hidden');
+};
 
 const filterItems = document.querySelectorAll('.effects__item');
-const uploadedPicture = document.querySelector('.img-upload__preview');
+const picturePreview = document.querySelector('.img-upload__preview');
 let chosenEffect;
 
-filterItems.forEach((item) => {
-  item.addEventListener('change', (evt) => {
-    chosenEffect = evt.target.value;
-    const sliderSettings = getSliderSettings(chosenEffect);
-    sliderElement.noUiSlider.updateOptions(sliderSettings);
+const changeFilters = () => {
+  createInitialSlider();
+  filterItems.forEach((item) => {
+    item.addEventListener('change', (evt) => {
+      chosenEffect = evt.target.value;
+      if (chosenEffect === 'none') {
+        sliderElement.classList.add('hidden');
+        sliderContainer.classList.add('hidden');
+        picturePreview.style.filter = '';
+      } else {
+        sliderElement.classList.remove('hidden');
+        sliderContainer.classList.remove('hidden');
+        const sliderSettings = getSliderSettings(chosenEffect);
+        sliderElement.noUiSlider.updateOptions(sliderSettings);
+      }
+    });
   });
-});
+};
+
+changeFilters();
 
 const effectLevel = sliderContainer.querySelector('.effect-level__value');
 
 sliderElement.noUiSlider.on('update', () => {
   effectLevel.value = sliderElement.noUiSlider.get();
-  uploadedPicture.style.filter = getFilterSettings(chosenEffect, effectLevel.value);
+  picturePreview.style.filter = getFilterSettings(chosenEffect, effectLevel.value);
 });
