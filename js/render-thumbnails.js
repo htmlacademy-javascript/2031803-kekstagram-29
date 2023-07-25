@@ -1,5 +1,3 @@
-import {closeBigPicture, openBigPicture} from './fullscreen-mode.js';
-
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
