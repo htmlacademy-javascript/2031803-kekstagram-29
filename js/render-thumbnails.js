@@ -1,14 +1,13 @@
-import {createPhotoDescriptions} from './data-generation.js';
+import {closeBigPicture, openBigPicture} from './fullscreen-mode.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const fragmentPhotos = document.createDocumentFragment();
-const similarPhotoObjects = createPhotoDescriptions();
 
-const renderThumbnails = () => {
-  similarPhotoObjects.forEach(({url, description, likes, comments}) => {
+const renderThumbnails = (pictures) => {
+  pictures.forEach(({url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__img').alt = description;
@@ -19,4 +18,4 @@ const renderThumbnails = () => {
   picturesContainer.append(fragmentPhotos);
 };
 
-export {renderThumbnails, picturesContainer, similarPhotoObjects};
+export {renderThumbnails, picturesContainer};

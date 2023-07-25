@@ -1,3 +1,4 @@
+/*
 import {getRandomInteger, createUniqueId, getRandomArrayElement} from './util.js';
 
 const MESSAGES = [
@@ -113,3 +114,4 @@ const createPhotoDescription = () => {
 const createPhotoDescriptions = () => Array.from({length: PHOTO_OBJECTS_COUNT}, createPhotoDescription);
 
 export {createPhotoDescriptions};
+*/
