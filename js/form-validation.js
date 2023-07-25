@@ -1,5 +1,6 @@
 import {sendData} from './api.js';
-import {showAlert} from './util.js';
+import {isEscapeKey, showAlert} from './util.js';
+import {onPopupEscKeydown} from './fullscreen-mode.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 
@@ -53,19 +54,40 @@ pristine.addValidator(
   validateComment,
   'длина комментария не может составлять больше 140 символов');
 
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
+const submitButton = imageUploadForm.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
 const setUserFormSubmit = (onSuccess) => {
   imageUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     const formData = new FormData(evt.target);
     if (isValid) {
+      blockSubmitButton();
       sendData(formData)
         .then(onSuccess)
         .catch((err) => {
           showAlert(err.message);
-        });
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };
+
+setUserFormSubmit();
 
 export {setUserFormSubmit};

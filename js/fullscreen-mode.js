@@ -65,4 +65,4 @@ function onPopupEscKeydown (evt) {
   }
 }
 
-export {openBigPicture, closeBigPicture};
+export {openBigPicture, closeBigPicture, onPopupEscKeydown};

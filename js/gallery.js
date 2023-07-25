@@ -1,8 +1,24 @@
 import {closeBigPicture, openBigPicture} from './fullscreen-mode.js';
-import {picturesContainer, renderThumbnails} from './render-thumbnails.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
-import {setUserFormSubmit} from './form-validation.js';
+
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
+const fragmentPhotos = document.createDocumentFragment();
+
+const renderThumbnails = (pictures) => {
+  pictures.forEach(({url, description, likes, comments}) => {
+    const pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').src = url;
+    pictureElement.querySelector('.picture__img').alt = description;
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    fragmentPhotos.append(pictureElement);
+  });
+  picturesContainer.append(fragmentPhotos);
+};
 
 let uploadedPhotos;
 
@@ -23,6 +39,5 @@ picturesContainer.addEventListener('click', (evt) => {
 
 const hidePictureButton = document.querySelector('.big-picture__cancel');
 
-setUserFormSubmit(closeBigPicture);
-
 hidePictureButton.addEventListener('click', closeBigPicture);
+
