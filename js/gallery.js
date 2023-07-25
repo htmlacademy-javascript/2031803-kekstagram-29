@@ -1,6 +1,8 @@
 import {closeBigPicture, openBigPicture} from './fullscreen-mode.js';
 import {picturesContainer, renderThumbnails} from './render-thumbnails.js';
 import {getData} from './api.js';
+import {showAlert} from './util.js';
+import {setUserFormSubmit} from './form-validation.js';
 
 let uploadedPhotos;
 
@@ -8,6 +10,9 @@ getData()
   .then((userPhotos) => {
     renderThumbnails(userPhotos);
     uploadedPhotos = userPhotos;
+  })
+  .catch((err) => {
+    showAlert(err.message);
   });
 
 picturesContainer.addEventListener('click', (evt) => {
@@ -17,5 +22,7 @@ picturesContainer.addEventListener('click', (evt) => {
 });
 
 const hidePictureButton = document.querySelector('.big-picture__cancel');
+
+setUserFormSubmit(closeBigPicture);
 
 hidePictureButton.addEventListener('click', closeBigPicture);

@@ -1,3 +1,6 @@
+import {sendData} from './api.js';
+import {showAlert} from './util.js';
+
 const imageUploadForm = document.querySelector('.img-upload__form');
 
 const pristine = new Pristine(imageUploadForm, {
@@ -50,10 +53,19 @@ pristine.addValidator(
   validateComment,
   'длина комментария не может составлять больше 140 символов');
 
+const setUserFormSubmit = (onSuccess) => {
+  imageUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    const formData = new FormData(evt.target);
+    if (isValid) {
+      sendData(formData)
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        });
+    }
+  });
+};
 
-imageUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    imageUploadForm.submit();
-  }
-});
+export {setUserFormSubmit};
