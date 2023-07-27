@@ -81,12 +81,11 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(formData)
         .then(onSuccess('success'))
         .catch((err) => {
-          showAlert(err.message);
+          onSuccess('error');
         })
-        .finally(unblockSubmitButton);
+        .finally(unblockSubmitButton)
     }
   });
 };
 
 setUserFormSubmit(showStatusModal);
-
