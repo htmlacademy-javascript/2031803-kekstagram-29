@@ -4,32 +4,28 @@ const successTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
 
-const showSuccessModal = () => {
-  document.body.append(successTemplate.cloneNode(true));
-  document.addEventListener('keydown', onEscKeydown);
-};
-showSuccessModal();
-const successModal = document.querySelector('.success');
-const successButton = document.querySelector('.success__button');
-
 const errorTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
 
-const showErrorModal = () => {
-  document.body.append(errorTemplate.cloneNode(true));
-  document.addEventListener('keydown', onEscKeydown);
-};
-//showErrorModal();
-const errorModal = document.querySelector('.error');
-const errorButton = document.querySelector('.error__button');
+
+let statusModal;
+let statusButton;
 
 const hideModal = () => {
-  if (successModal === null) {
-    errorModal.classList.add('hidden');
-  } else {
-    successModal.classList.add('hidden');
-  }
+  statusModal.classList.add('hidden');
+};
+
+const showStatusModal = (status) => {
+  const statusTemplate = document.querySelector(`#${status}`)
+    .content
+    .querySelector(`.${status}`);
+  return () => {
+    statusModal = document.body.appendChild(statusTemplate.cloneNode(true));
+    statusButton = document.querySelector(`.${status}__button`);
+    document.addEventListener('keydown', onEscKeydown);
+    statusButton.addEventListener('click', hideModal);
+  };
 };
 
 function onEscKeydown (evt) {
@@ -38,3 +34,5 @@ function onEscKeydown (evt) {
     hideModal();
   }
 }
+
+export {showStatusModal};

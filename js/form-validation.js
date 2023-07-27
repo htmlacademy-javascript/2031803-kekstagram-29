@@ -1,6 +1,6 @@
 import {sendData} from './api.js';
-import {isEscapeKey, showAlert} from './util.js';
-import {onPopupEscKeydown} from './fullscreen-mode.js';
+import {showAlert} from './util.js';
+import {showStatusModal} from './success modal.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 
@@ -79,7 +79,7 @@ const setUserFormSubmit = (onSuccess) => {
     if (isValid) {
       blockSubmitButton();
       sendData(formData)
-        .then(onSuccess)
+        .then(onSuccess('success'))
         .catch((err) => {
           showAlert(err.message);
         })
@@ -88,6 +88,5 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-setUserFormSubmit();
+setUserFormSubmit(showStatusModal);
 
-export {setUserFormSubmit};
