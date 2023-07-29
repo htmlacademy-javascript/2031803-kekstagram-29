@@ -1,37 +1,36 @@
 import {isEscapeKey} from './util.js';
-
-const successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-
-const errorTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-
+import {closeImageUpload, onFormEscKeydown} from './image-upload.js';
 
 let statusModal;
 let statusButton;
 
-const hideModal = () => {
-  statusModal.classList.add('hidden');
+const hideStatusModal = () => {
+  statusModal.remove();
+  document.removeEventListener('keydown', onEscKeydown);
 };
 
 const showStatusModal = (status) => {
+  if (status === 'success') {
+    closeImageUpload();
+  } else {
+    document.removeEventListener('keydown', onFormEscKeydown);
+  }
   const statusTemplate = document.querySelector(`#${status}`)
     .content
     .querySelector(`.${status}`);
-  return () => {
-    statusModal = document.body.appendChild(statusTemplate.cloneNode(true));
-    statusButton = document.querySelector(`.${status}__button`);
-    document.addEventListener('keydown', onEscKeydown);
-    statusButton.addEventListener('click', hideModal);
-  };
+  statusModal = document.body.appendChild(statusTemplate.cloneNode(true));
+  statusButton = document.querySelector(`.${status}__button`);
+  document.addEventListener('keydown', onEscKeydown);
+  statusButton.addEventListener('click', hideStatusModal);
+  if (status === 'error') {
+    document.addEventListener('keydown', onFormEscKeydown);
+  }
 };
 
 function onEscKeydown (evt) {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
-    hideModal();
+    hideStatusModal();
   }
 }
 

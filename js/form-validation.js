@@ -1,5 +1,4 @@
 import {sendData} from './api.js';
-import {showAlert} from './util.js';
 import {showStatusModal} from './success modal.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
@@ -71,21 +70,14 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const setUserFormSubmit = (onSuccess) => {
-  imageUploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    const formData = new FormData(evt.target);
-    if (isValid) {
-      blockSubmitButton();
-      sendData(formData)
-        .then(onSuccess('success'))
-        .catch((err) => {
-          onSuccess('error');
-        })
-        .finally(unblockSubmitButton)
-    }
-  });
+const setUserFormSubmit = async (evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    blockSubmitButton();
+    await sendData(new FormData(evt.target));
+    unblockSubmitButton();
+    showStatusModal('success');
+  }
 };
 
-setUserFormSubmit(showStatusModal);
+imageUploadForm.addEventListener('submit', setUserFormSubmit);

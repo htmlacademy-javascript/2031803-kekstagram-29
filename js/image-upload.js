@@ -8,18 +8,18 @@ let preview;
 const openImageUpload = () => {
   imageUploadForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('keydown', onFormEscKeydown);
 };
 
 const closeImageUpload = () => {
   imageUploadForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.removeEventListener('keydown', onFormEscKeydown);
   preview = imageUploadForm.querySelector('.img-upload__preview');
   preview.src = '';
 };
 
-function onPopupEscKeydown (evt) {
+function onFormEscKeydown (evt) {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeImageUpload();
@@ -49,4 +49,4 @@ imageUploadInput.addEventListener('change', (evt) => {
 
 imageUploadCancel.addEventListener('click', closeImageUpload);
 
-export {closeImageUpload};
+export {closeImageUpload, onFormEscKeydown};
