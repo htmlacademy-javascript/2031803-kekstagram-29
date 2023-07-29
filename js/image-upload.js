@@ -23,6 +23,7 @@ function onFormEscKeydown (evt) {
   if (isEscapeKey(evt.key)) {
     evt.preventDefault();
     closeImageUpload();
+    imageUploadForm.reset();
   }
 }
 

@@ -71,13 +71,19 @@ const unblockSubmitButton = () => {
 };
 
 const setUserFormSubmit = async (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    blockSubmitButton();
-    await sendData(new FormData(evt.target));
-    unblockSubmitButton();
-    showStatusModal('success');
+  try {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      await sendData(new FormData(evt.target));
+      showStatusModal('success');
+      imageUploadForm.reset();
+    }
+  } catch (err) {
+    showStatusModal('error');
   }
+  unblockSubmitButton();
 };
+
 
 imageUploadForm.addEventListener('submit', setUserFormSubmit);
