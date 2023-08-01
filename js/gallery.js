@@ -7,7 +7,7 @@ const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const fragmentPhotos = document.createDocumentFragment();
-const savedContent = picturesContainer.innerHTML;;
+const savedContent = picturesContainer.innerHTML;
 
 const renderThumbnails = (pictures) => {
   picturesContainer.innerHTML = savedContent;
