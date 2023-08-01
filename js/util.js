@@ -56,4 +56,12 @@ const shuffleArray = (array) => {
   return array;
 };
 
-export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey, showAlert, shuffleArray};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, createUniqueId, getRandomArrayElement, isEscapeKey, showAlert, shuffleArray, debounce};
