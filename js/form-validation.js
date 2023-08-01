@@ -76,6 +76,7 @@ const setUserFormSubmit = async (evt) => {
     if (pristine.validate()) {
       blockSubmitButton();
       await sendData(new FormData(evt.target));
+      document.querySelector('.img-filters').classList.remove('img-filters--inactive');
       showStatusModal('success');
       imageUploadForm.reset();
     }
@@ -84,6 +85,5 @@ const setUserFormSubmit = async (evt) => {
   }
   unblockSubmitButton();
 };
-
 
 imageUploadForm.addEventListener('submit', setUserFormSubmit);
