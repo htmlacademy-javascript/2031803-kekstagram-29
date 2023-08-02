@@ -35,7 +35,7 @@ const changeFiltersBackground = (objURL) => {
   });
 };
 
-fileChooser.addEventListener('change', (evt) => {
+fileChooser.addEventListener('change', () => {
   openImageUpload();
   const file = fileChooser.files[0];
   const fileName = file.name.toLowerCase();
