@@ -21,7 +21,7 @@ const getFilteredPhotos = (filter, data) => {
   }
 };
 
-const RERENDER_DELAY = 500;
+const RERENDER_DELAY = 501;
 const makeDebounce = debounce((data) => {
   renderThumbnails(data);
 }, RERENDER_DELAY);
