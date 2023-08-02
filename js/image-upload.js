@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {setDefault} from './slider.js';
 
 const uploadModal = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
@@ -17,7 +18,7 @@ const closeImageUpload = () => {
   uploadModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onFormEscKeydown);
-  preview.src = '';
+  setDefault();
 };
 
 function onFormEscKeydown (evt) {

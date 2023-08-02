@@ -16,8 +16,9 @@ const pristine = new Pristine(imageUploadForm, {
 const isTagValid = (hashtag) => hashtag.match(/^#[a-zа-яё0-9]{1,19}$/i) || hashtag === '';
 
 const isTagUnique = (hashtagArray) => {
-  const uniqueTags = new Set(hashtagArray);
-  return uniqueTags.size === hashtagArray.length;
+  const lowerArr = hashtagArray.map((item) => item.toLowerCase());
+  const uniqueTags = new Set(lowerArr);
+  return uniqueTags.size === lowerArr.length;
 };
 
 const validateHashtags = (hashtags) => hashtags.split(' ').every(isTagValid)
