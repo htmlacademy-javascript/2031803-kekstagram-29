@@ -9,11 +9,13 @@ const pristine = new Pristine(imageUploadForm, {
   successClass: 'form__item--valid', // Класс, обозначающий валидное поле
   errorTextParent: 'img-upload__field-wrapper', // Элемент, куда будет выводиться текст с ошибкой
   errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
-  errorTextClass: 'form__error' // Класс для элемента с текстом ошибки
+  errorTextClass: 'img-upload__field-wrapper--error' // Класс для элемента с текстом ошибки
 }, false);
 
 
 const isTagValid = (hashtag) => hashtag.match(/^#[a-zа-яё0-9]{1,19}$/i) || hashtag === '';
+
+const splitHashtags = (tags) => tags.split(' ').filter((word) => word !== '');
 
 const isTagUnique = (hashtagArray) => {
   const lowerArr = hashtagArray.map((item) => item.toLowerCase());
@@ -21,25 +23,25 @@ const isTagUnique = (hashtagArray) => {
   return uniqueTags.size === lowerArr.length;
 };
 
-const validateHashtags = (hashtags) => hashtags.split(' ').every(isTagValid)
-  && hashtags.split(' ').length < 5
-  && isTagUnique(hashtags.split(' '));
+const validateHashtags = (hashtags) => splitHashtags(hashtags).every(isTagValid)
+  && splitHashtags(hashtags).length < 5
+  && isTagUnique(splitHashtags(hashtags));
 
 const getHashtagErrorMessage = (hashtags) => {
-  const errorMessage = [];
-  if (!hashtags.split(' ').every(isTagValid)) {
-    errorMessage.push('введён невалидный тег');
+  const errorMessages = [];
+  if (!splitHashtags(hashtags).every(isTagValid)) {
+    errorMessages.push('введён невалидный тег');
   }
 
-  if (hashtags.split(' ').length > 5) {
-    errorMessage.push('превышено количество тегов');
+  if (splitHashtags(hashtags).length > 5) {
+    errorMessages.push('превышено количество тегов');
   }
 
-  if (!isTagUnique(hashtags.split(' '))) {
-    errorMessage.push('теги повторяются');
+  if (!isTagUnique(splitHashtags(hashtags))) {
+    errorMessages.push('теги повторяются');
   }
 
-  return errorMessage.join(', ');
+  return errorMessages.join(', ');
 };
 
 pristine.addValidator(
@@ -70,11 +72,14 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
-
 const setUserFormSubmit = async (evt) => {
   try {
     evt.preventDefault();
     if (pristine.validate()) {
+      const error = document.querySelector('.pristine-error.img-upload__field-wrapper--error');
+      if (error !== null) {
+        error.remove();
+      }
       blockSubmitButton();
       await sendData(new FormData(evt.target));
       document.querySelector('.img-filters').classList.remove('img-filters--inactive');

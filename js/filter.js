@@ -3,6 +3,7 @@ import {debounce, shuffleArray} from './util.js';
 
 const filterForm = document.querySelector('.img-filters__form');
 const RANDOM_PHOTOS_COUNT = 10;
+const RERENDER_DELAY = 501;
 
 const compareComments = (photoA, photoB) => {
   const commentsA = photoA.comments.length;
@@ -21,7 +22,6 @@ const getFilteredPhotos = (filter, data) => {
   }
 };
 
-const RERENDER_DELAY = 501;
 const makeDebounce = debounce((data) => {
   renderThumbnails(data);
 }, RERENDER_DELAY);
